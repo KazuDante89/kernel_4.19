@@ -58,3 +58,13 @@ endchoice
 
 config PREEMPT_COUNT
        bool
+
+config PREEMPTION
+       bool
+       select PREEMPT_COUNT
+
+
+config SCHED_CORE
+	bool "Core Scheduling for SMT"
+	default y
+	depends on SCHED_SMT
