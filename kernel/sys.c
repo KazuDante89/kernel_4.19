@@ -2646,6 +2646,34 @@ SYSCALL_DEFINE5(prctl, int, option, unsigned long, arg2, unsigned long, arg3,
 			return -EINVAL;
 		error = GET_TAGGED_ADDR_CTRL();
 		break;
+	case PR_SET_IO_FLUSHER:
+		if (!capable(CAP_SYS_RESOURCE))
+			return -EPERM;
+
+		if (arg3 || arg4 || arg5)
+			return -EINVAL;
+
+		if (arg2 == 1)
+			current->flags |= PR_IO_FLUSHER;
+		else if (!arg2)
+			current->flags &= ~PR_IO_FLUSHER;
+		else
+			return -EINVAL;
+		break;
+	case PR_GET_IO_FLUSHER:
+		if (!capable(CAP_SYS_RESOURCE))
+			return -EPERM;
+
+		if (arg2 || arg3 || arg4 || arg5)
+			return -EINVAL;
+
+		error = (current->flags & PR_IO_FLUSHER) == PR_IO_FLUSHER;
+		break;
+#ifdef CONFIG_SCHED_CORE
+	case PR_SCHED_CORE:
+		error = sched_core_share_pid(arg2, arg3, arg4, arg5);
+		break;
+#endif
 	default:
 		error = -EINVAL;
 		break;
