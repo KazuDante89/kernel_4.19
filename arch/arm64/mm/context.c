@@ -101,11 +101,6 @@ static void __arm64_workaround_1542418_asid_rollover(void)
 	phys_addr_t ttbr1_baddr;
 	u64 idx, ttbr1;	/* ASID is in ttbr1 due to TCR_EL1.A1 */
 
-	if (!IS_ENABLED(CONFIG_ARM64_ERRATUM_1542418) ||
-	    !cpus_have_const_cap(ARM64_WORKAROUND_1542418) ||
-	    !this_cpu_has_cap(ARM64_WORKAROUND_1542418))
-		return;
-
 	/*
 	 * We're about to use an arbitrary set of ASIDs, which may have
 	 * live entries in the TLB (and on other CPUs with CnP). Ensure
