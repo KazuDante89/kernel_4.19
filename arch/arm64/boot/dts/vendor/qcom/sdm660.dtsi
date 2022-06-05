@@ -31,7 +31,7 @@
 
 	chosen {
 		stdout-path = "serial0";
-		bootargs = "rcupdate.rcu_expedited=1";
+		bootargs = "rcupdate.rcu_expedited=1 rcupdate.rcu_normal_after_boot=1 nosoftlockup mce=ignore_ce noirqdebug rcu_nocbs=0-7 kpti=off";
 	};
 
 	psci {
@@ -48,10 +48,10 @@
 			compatible = "arm,armv8";
 			reg = <0x0 0x0>;
 			enable-method = "psci";
-			capacity-dmips-mhz = <1024>;
+			capacity-dmips-mhz = <636>;
 			sched-energy-costs = <&CPU_COST_0>;
 			qcom,lmh-dcvs = <&lmh_dcvs0>;
-			efficiency = <1024>;
+			efficiency = <636>;
 			next-level-cache = <&L2_0>;
 			#cooling-cells = <2>;
 			L2_0: l2-cache {
@@ -75,11 +75,11 @@
 			compatible = "arm,armv8";
 			reg = <0x0 0x1>;
 			enable-method = "psci";
-			capacity-dmips-mhz = <1024>;
+			capacity-dmips-mhz = <636>;
 			sched-energy-costs = <&CPU_COST_0>;
 			qcom,lmh-dcvs = <&lmh_dcvs0>;
 			#cooling-cells = <2>;
-			efficiency = <1024>;
+			efficiency = <636>;
 			next-level-cache = <&L2_0>;
 			L1_I_1: l1-icache {
 				compatible = "arm,arch-cache";
@@ -94,10 +94,10 @@
 			compatible = "arm,armv8";
 			reg = <0x0 0x2>;
 			enable-method = "psci";
-			capacity-dmips-mhz = <1024>;
+			capacity-dmips-mhz = <636>;
 			sched-energy-costs = <&CPU_COST_0>;
 			qcom,lmh-dcvs = <&lmh_dcvs0>;
-			efficiency = <1024>;
+			efficiency = <636>;
 			next-level-cache = <&L2_0>;
 			#cooling-cells = <2>;
 			L1_I_2: l1-icache {
@@ -113,10 +113,10 @@
 			compatible = "arm,armv8";
 			reg = <0x0 0x3>;
 			enable-method = "psci";
-			capacity-dmips-mhz = <1024>;
+			capacity-dmips-mhz = <636>;
 			sched-energy-costs = <&CPU_COST_0>;
 			qcom,lmh-dcvs = <&lmh_dcvs0>;
-			efficiency = <1024>;
+			efficiency = <636>;
 			next-level-cache = <&L2_0>;
 			#cooling-cells = <2>;
 			L1_I_3: l1-icache {
@@ -132,10 +132,10 @@
 			compatible = "arm,armv8";
 			reg = <0x0 0x100>;
 			enable-method = "psci";
-			capacity-dmips-mhz = <1638>;
+			capacity-dmips-mhz = <1024>;
 			sched-energy-costs = <&CPU_COST_1>;
 			qcom,lmh-dcvs = <&lmh_dcvs1>;
-			efficiency = <1638>;
+			efficiency = <1024>;
 			next-level-cache = <&L2_1>;
 			#cooling-cells = <2>;
 			L2_1: l2-cache {
@@ -155,11 +155,11 @@
 			compatible = "arm,armv8";
 			reg = <0x0 0x101>;
 			enable-method = "psci";
-			capacity-dmips-mhz = <1638>;
+			capacity-dmips-mhz = <1024>;
 			sched-energy-costs = <&CPU_COST_1>;
 			qcom,lmh-dcvs = <&lmh_dcvs1>;
 			#cooling-cells = <2>;
-			efficiency = <1638>;
+			efficiency = <1024>;
 			next-level-cache = <&L2_1>;
 			L1_I_101: l1-icache {
 				compatible = "arm,arch-cache";
@@ -174,11 +174,11 @@
 			compatible = "arm,armv8";
 			reg = <0x0 0x102>;
 			enable-method = "psci";
-			capacity-dmips-mhz = <1638>;
+			capacity-dmips-mhz = <1024>;
 			sched-energy-costs = <&CPU_COST_1>;
 			qcom,lmh-dcvs = <&lmh_dcvs1>;
 			#cooling-cells = <2>;
-			efficiency = <1638>;
+			efficiency = <1024>;
 			next-level-cache = <&L2_1>;
 			L1_I_102: l1-icache {
 				compatible = "arm,arch-cache";
@@ -193,11 +193,11 @@
 			compatible = "arm,armv8";
 			reg = <0x0 0x103>;
 			enable-method = "psci";
-			capacity-dmips-mhz = <1638>;
+			capacity-dmips-mhz = <1024>;
 			sched-energy-costs = <&CPU_COST_1>;
 			qcom,lmh-dcvs = <&lmh_dcvs1>;
 			#cooling-cells = <2>;
-			efficiency = <1638>;
+			efficiency = <1024>;
 			next-level-cache = <&L2_1>;
 			L1_I_103: l1-icache {
 				compatible = "arm,arch-cache";
@@ -251,26 +251,24 @@
 
 		CPU_COST_0: core-cost0 {
 			busy-cost-data = <
-				633600	41
-				902400	70
-				1113600	83
-				1401600	146
-				1536000	158
-				1747200	228
-				1843200	285
+				 633600	40
+				 902400	69
+				1113600	84
+				1401600	122
+				1536000	159
+				1747200	195
+				1843200	218
 			>;
 		};
 
 		CPU_COST_1: core-cost1 {
 			busy-cost-data = <
-				1113600	307
-				1401600	485
-				1747200	857
-				1804800	883
-				1958400	1222
-				2150400	1592
-				2208000	1632
-				2457600	2080
+				1113600	289
+				1401600	379
+				1747200	540
+				1958400	626
+				2150400	775
+				2208000	884
 			>;
 		};
 	};
@@ -1042,7 +1040,7 @@
 
 	 cpu_cpu_ddr_bw: qcom,cpu-cpu-ddr-bw {
 		compatible = "qcom,devbw";
-		governor = "performance";
+		governor = "bw_hwmon";
 		qcom,src-dst-ports =
 			<MSM_BUS_MASTER_AMPSS_M0 MSM_BUS_SLAVE_EBI_CH0>;
 		qcom,active-only;
@@ -1109,7 +1107,7 @@
 			qcom,core-dev-table =
 				< 902400 MHZ_TO_MBPS(200, 4) >,
 				< 1401600 MHZ_TO_MBPS(547, 4) >,
-				< 1881600 MHZ_TO_MBPS(1017, 4) >;
+				< 1843200 MHZ_TO_MBPS(1017, 4) >;
 		};
 
 		cpu0_computemon: qcom,cpu0-computemon {
@@ -1119,7 +1117,7 @@
 			qcom,core-dev-table =
 				< 633600 MHZ_TO_MBPS(200, 4) >,
 				< 1401600 MHZ_TO_MBPS(412, 4) >,
-				< 1881600 MHZ_TO_MBPS(768, 4) >;
+				< 1843200 MHZ_TO_MBPS(768, 4) >;
 		};
 	};
 
@@ -1137,7 +1135,7 @@
 				< 1113600 MHZ_TO_MBPS(200, 4) >,
 				< 1401600 MHZ_TO_MBPS(1017, 4) >,
 				< 2150400 MHZ_TO_MBPS(1555, 4) >,
-				< 2457600 MHZ_TO_MBPS(1804, 4) >;
+				< 2208000 MHZ_TO_MBPS(1804, 4) >;
 		};
 
 		cpu4_computemon: qcom,cpu4-computemon {
@@ -1149,7 +1147,7 @@
 				< 1401600 MHZ_TO_MBPS(547, 4) >,
 				< 1747200 MHZ_TO_MBPS(768, 4) >,
 				< 2150400 MHZ_TO_MBPS(1017, 4) >,
-				< 2457600 MHZ_TO_MBPS(1804, 4) >;
+				< 2208000 MHZ_TO_MBPS(1804, 4) >;
 		};
 	};
 
@@ -1293,7 +1291,6 @@
 			< 1113600 >,
 			< 1401600 >,
 			< 1536000 >,
-			< 1612800 >,
 			< 1747200 >,
 			< 1843200 >;
 
@@ -1301,11 +1298,9 @@
 			< 1113600 >,
 			< 1401600 >,
 			< 1747200 >,
-			< 1804800 >,
 			< 1958400 >,
 			< 2150400 >,
-			< 2208000 >,
-			< 2457600 >;
+			< 2208000 >;
 	};
 
 	sdhc_1: sdhci@c0c4000 {
