@@ -92,7 +92,7 @@ int elapsedNanosecond(struct StopWatch *w)
 	return result;
 }
 
-char *timestamp(viod)
+char *timestamp(void)
 {
 	char *result = NULL;
 
